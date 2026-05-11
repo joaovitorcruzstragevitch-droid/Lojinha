@@ -1,3 +1,6 @@
+use dblojinha;
+go
+
 create procedure [dbo].[altera_cliente]
 	@codigo int output,
 	@nome varchar(100),
