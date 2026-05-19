@@ -13,196 +13,164 @@ namespace Lojinha.DAL
 {
     public class ClientesDAL
     {
-
         public void Incluir(ClienteInformation cliente)
         {
-
-            //conexao com o bloco de dados
-            SqlConnection cn = new SqlConnection();
+            //Conexão com o banco de dados 
+            SqlConnection cn = new SqlConnection(Dados.StringConexao);
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Altera_cliente";
-                //parametros da stored procedure
+                cmd.CommandText = "insere_cliente";
+                //Parametros Da Stored Procedure
                 SqlParameter pcodigo = new SqlParameter("@codigo", SqlDbType.Int);
                 pcodigo.Direction = ParameterDirection.Output;
                 cmd.Parameters.Add(pcodigo);
-                SqlParameter prome = new SqlParameter("@nome", SqlDbType.VarChar, 100)
-                        prome.Value = cliente.pnome;
-                cmd.Parameters.Add(prome);
 
-                SqlParameter pemail = new SqlParameter("@email", SqlDbType.VarChar, 100)
-                        pemail.Value = cliente.telefone;
+                SqlParameter pnome = new SqlParameter("@nome", SqlDbType.VarChar, 100);
+                pnome.Value = cliente.Nome;
+                cmd.Parameters.Add(pnome);
+
+                SqlParameter pemail = new SqlParameter("@email", SqlDbType.VarChar, 100);
+                pemail.Value = cliente.Email;
                 cmd.Parameters.Add(pemail);
 
-                SqlParameter ptelefone = new SqlParameter("@ptelefone", SqlDbType.VarChar, 100)
-                        ptelefone.Value = cliente.Nome;
+                SqlParameter ptelefone = new SqlParameter("@telefone", SqlDbType.VarChar, 100);
+                ptelefone.Value = cliente.Telefone;
                 cmd.Parameters.Add(ptelefone);
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
-
-                cliente.codigo = (Int32)cmd.Parameters["2Codigo"].Value;
+                cliente.Codigo = (Int32)cmd.Parameters["@codigo"].Value;
 
             }
             catch (SqlException ex)
             {
-                throw new Exception("erro ao acessar o banco de dados." + ex.Number);
+                throw new Exception("Erro ao acessa banco de dados. " + ex.Message.ToString());
             }
-            catch {
-
-                throw new Exception("erro desconhecido ao acessar o Banco de dados.");
+            catch
+            {
+                throw new Exception("Erro desconhecido ao acessar banco de dados. ");
             }
-
             finally
             {
                 cn.Close();
             }
+
         }
+
         public void Alterar(ClienteInformation cliente)
         {
-            //conexao com o bloco de dados
-            SqlConnection cn = new SqlConnection();
+            //Conexão com o banco de dados 
+            SqlConnection cn = new SqlConnection(Dados.StringConexao);
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "insere_clientes";
-                //parametros da stored procedure
+                cmd.CommandText = "altera_cliente";
+                //Parametros Da Stored Procedure
                 SqlParameter pcodigo = new SqlParameter("@codigo", SqlDbType.Int);
-                pcodigo.Direction = ParameterDirection.Output;
+                pcodigo.Value = cliente.Codigo;
                 cmd.Parameters.Add(pcodigo);
-                SqlParameter prome = new SqlParameter("@nome", SqlDbType.VarChar, 100)
-                        prome.Value = cliente.pnome;
-                cmd.Parameters.Add(prome);
 
-                SqlParameter pemail = new SqlParameter("@email", SqlDbType.VarChar, 100)
-                        pemail.Value = cliente.telefone;
+                SqlParameter pnome = new SqlParameter("@nome", SqlDbType.VarChar, 100);
+                pnome.Value = cliente.Nome;
+                cmd.Parameters.Add(pnome);
+
+                SqlParameter pemail = new SqlParameter("@email", SqlDbType.VarChar, 100);
+                pemail.Value = cliente.Email;
                 cmd.Parameters.Add(pemail);
 
-                SqlParameter ptelefone = new SqlParameter("@ptelefone", SqlDbType.VarChar, 100)
-                        ptelefone.Value = cliente.Nome;
+                SqlParameter ptelefone = new SqlParameter("@telefone", SqlDbType.VarChar, 100);
+                ptelefone.Value = cliente.Telefone;
                 cmd.Parameters.Add(ptelefone);
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
 
-                cliente.codigo = (Int32)cmd.Parameters["2Codigo"].Value;
-
+                cliente.Codigo = (Int32)cmd.Parameters["@codigo"].Value;
             }
             catch (SqlException ex)
             {
-                throw new Exception("erro ao acessar o banco de dados." + ex.Number);
+                throw new Exception("Erro ao acessa banco de dados. " + ex.Number);
             }
             catch
             {
-
-                throw new Exception("erro desconhecido ao acessar o Banco de dados.");
+                throw new Exception("Erro desconhecido ao acessar banco de dados. ");
             }
-
             finally
             {
                 cn.Close();
-
-                {
-
-                }
             }
+
         }
-
-
-
-
-
-
-        public DataTable Listagem(string Filtro)
+        public void Excluir(int codigo)
         {
-            DataTable tabela = new DataTable();
-            //conexao com o bloco de dados
-            SqlConnection cn = new SqlConnection();
+            //Conexão com o banco de dados 
+            SqlConnection cn = new SqlConnection(Dados.StringConexao);
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "listagem_clientes";
-                //parametros da stored procedure
-                SqlParameter pfiltro = new SqlParameter("@filtro", SqlDbType.VarChar, 100);
-                pfiltro.Value = Filtro;
-                cmd.Parameters.Add(pfiltro);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(tabela);
+                cmd.CommandText = "exclui_cliente";
+                //Parametros Da Stored Procedure
+                SqlParameter pcodigo = new SqlParameter("@codigo", SqlDbType.Int);
+                pcodigo.Value = codigo;
+                cmd.Parameters.Add(pcodigo);
+                cn.Open();
+                cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
-                throw new Exception("erro ao acessar o banco de dados." + ex.Number);
+                throw new Exception("Erro ao acessa banco de dados. " + ex.Number);
             }
             catch
             {
-                throw new Exception("erro desconhecido ao acessar o Banco de dados.");
+                throw new Exception("Erro desconhecido ao acessar banco de dados. ");
             }
             finally
             {
                 cn.Close();
             }
-            return tabela;
-            {
-                //conexao com o bloco de dados
-                SqlConnection cn = new SqlConnection();
-                try
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = cn;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "excluir_clientes";
-                    //parametros da stored procedure
-                    SqlParameter pcodigo = new SqlParameter("@codigo", SqlDbType.Int);
-                    pcodigo.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(pcodigo);
-                    SqlParameter prome = new SqlParameter("@nome", SqlDbType.VarChar, 100)
-                            prome.Value = cliente.pnome;
-                    cmd.Parameters.Add(prome);
 
-                    SqlParameter pemail = new SqlParameter("@email", SqlDbType.VarChar, 100)
-                            pemail.Value = cliente.telefone;
-                    cmd.Parameters.Add(pemail);
-
-                    SqlParameter ptelefone = new SqlParameter("@ptelefone", SqlDbType.VarChar, 100)
-                            ptelefone.Value = cliente.Nome;
-                    cmd.Parameters.Add(ptelefone);
-
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-
-                    cliente.codigo = (Int32)cmd.Parameters["2Codigo"].Value;
-
-                }
-                catch (SqlException ex)
-                {
-                    throw new Exception("erro ao acessar o banco de dados." + ex.Number);
-                }
-                catch
-                {
-
-                    throw new Exception("erro desconhecido ao acessar o Banco de dados.");
-                }
-
-                finally
-                {
-                    cn.Close();
-
-                }
-            }
         }
+        public DataTable Listagem(string filtro)
+        {
+            //Conexão com o banco de dados 
+            SqlConnection cn = new SqlConnection(Dados.StringConexao);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "seleciona_cliente";
+                //Parametros Da Stored Procedure
+                SqlParameter pfiltro = new SqlParameter("@filtro", SqlDbType.VarChar, 100);
+                pfiltro.Value = filtro;
+                cmd.Parameters.Add(pfiltro);
+                DataTable tabela = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(tabela);
+                return tabela;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Erro ao acessa banco de dados. " + ex.Number);
+            }
+            catch
+            {
+                throw new Exception("Erro desconhecido ao acessar banco de dados. ");
+            }
+            finally
+            {
+                cn.Close();
+            }
 
+
+
+        }
     }
 }
-        
-    
-
-
-
-
