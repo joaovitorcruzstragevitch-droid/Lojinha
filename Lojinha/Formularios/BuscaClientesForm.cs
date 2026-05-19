@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Lojinha.BLL;
 
 namespace Lojinha.Formularios
 {
@@ -16,11 +17,14 @@ namespace Lojinha.Formularios
         {
             InitializeComponent();
         }
+
+        public object Clientedatagridview { get; private set; }
+
         public void atualizargrid()
         {
             //comunicacao com o camada bll
-            Clientesbll obj = new clientesbll();
-            clientedatagridview.datasurce = obj.listar(filtrotextBox.text);
+            ClientesBLL obj = new ClientesBLL();
+            //Clientedatagridview.DataSource = obj.Listagem(filtrotextBox.Text);
 
             //atualizar os objetos texbox
 

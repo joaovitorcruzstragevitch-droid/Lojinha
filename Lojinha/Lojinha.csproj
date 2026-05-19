@@ -154,7 +154,8 @@
   <ItemGroup>
     <Compile Include="BLL\ClientesBLL.cs" />
     <Compile Include="DAL\ClientesDAL.cs" />
-    <Compile Include="DAL\produtoDall.cs" />
+    <Compile Include="DAL\Dados.cs" />
+    <Compile Include="DAL\ProdutoDal.cs" />
     <Compile Include="Formularios\BuscaClientesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +187,7 @@
       <DependentUpon>FormProdutos.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\ClienteInformation.cs" />
+    <Compile Include="Modelos\ProdutoInformation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Formularios\BuscaClientesForm.resx">

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lojinha.DAL
 {
-    internal class produtoDall
+    internal class ProdutoDal
     {      
     }
 }
